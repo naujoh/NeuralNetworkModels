@@ -23,9 +23,6 @@ def storage(_set_a, _set_b):
             w[i][j] = sum
 
 def test():
-    global i
-    global set_a
-    global set_b
     y1 = []
     y2 = []
     for row in I:
@@ -46,6 +43,4 @@ def test():
             y2.append(-1)
         else:
             y2.append(0)
-    if y1 != set_a or y2 != set_b:
-        return False
-    return True
+    return y1 == set_a and y2 == set_b
