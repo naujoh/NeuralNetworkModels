@@ -16,6 +16,16 @@ def setup(_input_quantity, _learning_rate, _epoch_quantity, _bias = 0.0):
     for i in range(_input_quantity):
         weights.append(random.uniform(0.0, 1.0))
 
+def clear():
+    global weights
+    global bias
+    global learning_rate
+    global epoch_quantity
+    bias = 0.0
+    del weights[:]
+    learning_rate = 0.0
+    epoch_quantity = 0
+
 def predict(input):
     global bias
     global weights
