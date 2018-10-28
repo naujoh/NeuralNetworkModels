@@ -1,48 +1,20 @@
 import random
 
-bias = 0.0
-weights = []
-learning_rate = 0.0
-epoch_quantity = 0
+def generate_weights(inputs_q): return [random.uniform(-0.5, 0.5) for n in range(inputs_q+1)]
 
-def setup(_input_quantity, _learning_rate, _epoch_quantity, _bias = 0.0):
-    global weights
-    global bias
-    global learning_rate
-    global epoch_quantity
-    learning_rate = _learning_rate
-    epoch_quantity = _epoch_quantity
-    bias = _bias
-    for i in range(_input_quantity):
-        weights.append(random.uniform(0.0, 1.0))
+def train(learning_rate, epoch_q, dataset, weights):
+    return train(learning_rate, epoch_q-1, dataset, converge(dataset, learning_rate, weights)) if (epoch_q > 1) else converge(dataset, learning_rate, weights)
 
-def clear():
-    global weights
-    global bias
-    global learning_rate
-    global epoch_quantity
-    bias = 0.0
-    del weights[:]
-    learning_rate = 0.0
-    epoch_quantity = 0
+def converge(dataset, learning_rate, weights):
+    head, *tail = dataset
+    return adjust_w(weights, learning_rate, head) if tail == [] else converge(tail, learning_rate, adjust_w(weights, learning_rate, head))
 
-def predict(input):
-    global bias
-    global weights
-    activation = bias
-    for i in range(len(weights)):
-        activation += weights[i] * input[i]
-    return 1.0 if activation >= 0.0 else 0.0
+def adjust_w(weights, learning_rate, data):
+    return list(map(lambda w, delta_w: w+delta_w, weights, calculate_delta_w(learning_rate, data, weights)))
 
-def train(dataset):
-    global epoch_quantity
-    global weights
-    global learning_rate
-    global bias
-    for epoch in range(epoch_quantity):
-        for row in dataset:
-            prediction = predict(row)
-            error = row[-1] - prediction
-            bias += learning_rate * error
-            for i in range(len(weights)):
-                weights[i] = weights[i] + learning_rate * error * row[i]
+def calculate_delta_w(learning_rate, data, weights):
+    *body, last = data
+    return [learning_rate * (last-predict(body, weights)) * elem for elem in body]+[learning_rate*(last-predict(body, weights))]
+
+def predict(input, weights):
+    return 1.0 if sum(list(map(lambda w,x: w*x, weights, input))) + weights[-1] >= -weights[-1] else 0.0

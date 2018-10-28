@@ -1,29 +1,29 @@
 from models import perceptron
 
-# OR
-print("OR")
-perceptron.setup(2, 0.1, 5)
+#OR
 dataset = [[0, 0, 0],
-	[0, 1, 1],
-	[1, 0, 1],
-	[1, 1, 1]]
-perceptron.train(dataset)
-print('1 OR 1 = %d' % (perceptron.predict([1, 1])))
-print('1 OR 0 = %d' % (perceptron.predict([1, 0])))
-print('0 OR 1 = %d' % (perceptron.predict([0, 1])))
-print('0 OR 0 = %d' % (perceptron.predict([0, 0])))
-perceptron.clear()
+           [0, 1, 1],
+           [1, 0, 1],
+           [1, 1, 1]]
+weights = perceptron.generate_weights(2)
+weights = perceptron.train(0.01, 100, dataset, weights)
 
+print("Predictions for OR")
+print('1 OR 1 = %d' % (perceptron.predict([1, 1], weights)))
+print('1 OR 0 = %d' % (perceptron.predict([1, 0], weights)))
+print('0 OR 1 = %d' % (perceptron.predict([0, 1], weights)))
+print('0 OR 0 = %d' % (perceptron.predict([0, 0], weights)))
 
-# AND
-print("\nAND")
-perceptron.setup(2, 0.1, 5)
+#AND
 dataset = [[0, 0, 0],
-	[0, 1, 0],
-	[1, 0, 0],
-	[1, 1, 1]]
-perceptron.train(dataset)
-print('1 AND 1 = %d' % (perceptron.predict([1, 1])))
-print('1 AND 0 = %d' % (perceptron.predict([1, 0])))
-print('0 AND 1 = %d' % (perceptron.predict([0, 1])))
-print('0 AND 0 = %d' % (perceptron.predict([0, 0])))
+	       [0, 1, 0],
+	       [1, 0, 0],
+	       [1, 1, 1]]
+weights = perceptron.generate_weights(2)
+weights = perceptron.train(0.1, 10, dataset, weights)
+
+print("\nPredictions for AND")
+print('1 AND 1 = %d' % (perceptron.predict([1, 1], weights)))
+print('1 AND 0 = %d' % (perceptron.predict([1, 0], weights)))
+print('0 AND 1 = %d' % (perceptron.predict([0, 1], weights)))
+print('0 AND 0 = %d' % (perceptron.predict([0, 0], weights)))
