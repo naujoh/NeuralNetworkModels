@@ -20,7 +20,7 @@ dataset = [[0, 0, 0],
 	       [1, 0, 0],
 	       [1, 1, 1]]
 weights = perceptron.generate_weights(2)
-weights = perceptron.train(0.1, 10, dataset, weights)
+weights = perceptron.train(0.1, 20, dataset, weights)
 
 print("\nPredictions for AND")
 print('1 AND 1 = %d' % (perceptron.predict([1, 1], weights)))

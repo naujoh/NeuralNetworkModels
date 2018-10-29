@@ -3,7 +3,7 @@ import random
 def generate_weights(inputs_q): return [random.uniform(-0.5, 0.5) for n in range(inputs_q+1)]
 
 def train(learning_rate, epoch_q, dataset, weights):
-    return train(learning_rate, epoch_q-1, dataset, converge(dataset, learning_rate, weights)) if (epoch_q > 1) else converge(dataset, learning_rate, weights)
+    return train(learning_rate, epoch_q-1, dataset, converge(dataset, learning_rate, weights)) if (epoch_q > 0) else converge(dataset, learning_rate, weights)
 
 def converge(dataset, learning_rate, weights):
     head, *tail = dataset
